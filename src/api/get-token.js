@@ -11,4 +11,6 @@ export const getToken = () =>
       client_id: config.clientId,
       scope: config.scope,
     }),
-  }).then((res) => res.json())
+  })
+    .then((res) => res.json())
+    .then((res) => res.access_token)
