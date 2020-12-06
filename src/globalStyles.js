@@ -23,6 +23,8 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     font-size: 62.5%;
+    width: 100vw;
+    height: 100vh;
   }
 
   body {
@@ -30,6 +32,12 @@ const GlobalStyles = createGlobalStyle`
     font-family: 'circular', sans-serif;
     font-weight: 100;
     background-color: ${theme.color.softGray}
+  }
+  
+  #root {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
   }
 `
 
