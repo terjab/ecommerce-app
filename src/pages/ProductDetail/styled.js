@@ -24,7 +24,7 @@ export const DetailsWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${theme.color.softGray};
+  background-color: ${theme.color.softBlue};
   padding: 0 3rem;
   flex-direction: column;
 `
