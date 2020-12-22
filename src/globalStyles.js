@@ -5,13 +5,13 @@ import theme from './common/theme'
 const GlobalStyles = createGlobalStyle`
   @font-face {
     font-family: 'circular';
-    src: 'url('font/CircularStd-Book.otf') format('opentype')';
+    src: url('font/CircularStd-Book.otf') format('opentype');
     font-weight: 100;
   }
 
   @font-face {
     font-family: 'circular';
-    src: 'url('ont/CircularStd-Medium.otf') format('opentype')';
+    src: url('font/CircularStd-Medium.otf') format('opentype');
     font-weight: 200;
   }
 
