@@ -1,8 +1,6 @@
 module.exports = {
   extends: [
-    '@strv/react',
-    '@strv/react/optional',
-    '@strv/react/style',
+    '@strv/eslint-config-react/v16',
     '@strv/eslint-config-react/optional',
     'prettier',
     'prettier/react',
@@ -26,6 +24,6 @@ module.exports = {
   rules: {
     'prefer-named-capture-group': 0,
     'react/no-did-mount-set-state': 1,
-    'react/prop-types': 1,
+    'react/prop-types': 0,
   },
 }
