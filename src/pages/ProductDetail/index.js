@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { H1 } from '../../components/Typography'
 import { getProduct } from '../../api/get-product'
+import { H1 } from '../../components/Typography'
 import Layout from '../../components/Layout'
+import { AddButton } from '../ProductList/Product/styled'
 import {
   Wrapper,
   ImgWrapper,
@@ -12,7 +14,7 @@ import {
   Price,
 } from './styled'
 
-class ProductDetail extends Component {
+class Detail extends Component {
   state = {
     product: null,
   }
@@ -36,7 +38,7 @@ class ProductDetail extends Component {
 
   render() {
     const { product } = this.state
-
+    const { dispatch } = this.props
     return (
       <Layout>
         <Wrapper>
@@ -49,6 +51,16 @@ class ProductDetail extends Component {
                 <H1 textAlign="center">{product.data.attributes.name}</H1>
                 <Price>{product.included[0].attributes.formatted_amount}</Price>
                 <Description>{product.data.attributes.description}</Description>
+                <AddButton
+                  onClick={() =>
+                    dispatch({
+                      type: 'cartItems/ADD',
+                      payload: product.data.id,
+                    })
+                  }
+                >
+                  Add to Cart
+                </AddButton>
                 <Link to="/">Back</Link>
               </DetailsWrapper>
             </>
@@ -59,4 +71,4 @@ class ProductDetail extends Component {
   }
 }
 
-export { ProductDetail }
+export const ProductDetail = connect()(Detail)
