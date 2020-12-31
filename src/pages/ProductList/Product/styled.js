@@ -25,7 +25,7 @@ export const ImgWrap = styled.div`
 `
 
 export const Price = styled.div`
-  color: ${theme.color.red},
+  color: ${theme.color.red};
   font-size: 1.8rem;
   margin-top: 2rem;
 `

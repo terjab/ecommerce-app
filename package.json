@@ -8,8 +8,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write '*/**/*.{js,css,md,json}'",
-    "lint:js": "eslint . --ignore-path .gitignore --fix",
-    "lint:css": "stylelint 'src/**/*.js'"
+    "lint:js": "eslint . --ignore-path .gitignore --fix"
   },
   "lint-staged": {
     "*.js": [
