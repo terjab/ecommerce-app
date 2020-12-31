@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { getProduct } from '../../api/get-product'
 import { H1 } from '../../components/Typography'
 import Layout from '../../components/Layout'
-import { AddButton } from '../ProductList/Product/styled'
+import Button from '../../components/Button'
 import {
   Wrapper,
   ImgWrapper,
@@ -31,7 +31,7 @@ class Detail extends Component {
     }
   }
 
-  fetchProduct = async (productId) => {
+  fetchProduct = async productId => {
     const product = await getProduct(productId)
     this.setState({ product })
   }
@@ -51,7 +51,7 @@ class Detail extends Component {
                 <H1 textAlign="center">{product.data.attributes.name}</H1>
                 <Price>{product.included[0].attributes.formatted_amount}</Price>
                 <Description>{product.data.attributes.description}</Description>
-                <AddButton
+                <Button
                   onClick={() =>
                     dispatch({
                       type: 'cartItems/ADD',
@@ -60,7 +60,7 @@ class Detail extends Component {
                   }
                 >
                   Add to Cart
-                </AddButton>
+                </Button>
                 <Link to="/">Back</Link>
               </DetailsWrapper>
             </>
