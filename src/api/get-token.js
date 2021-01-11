@@ -1,8 +1,7 @@
 import config from '../config'
-import { setToken } from '../utils/token'
 
-export const getGuestToken = async () => {
-  const response = await fetch(`${config.apiUrl}/oauth/token`, {
+export const getToken = () =>
+  fetch(`${config.apiUrl}/oauth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -13,9 +12,5 @@ export const getGuestToken = async () => {
       scope: config.scope,
     }),
   })
-
-  const { access_token } = await response.json()
-  setToken(access_token)
-
-  return access_token
-}
+    .then((res) => res.json())
+    .then((res) => res.access_token)

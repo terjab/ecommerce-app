@@ -4,7 +4,7 @@ import Layout from '../../components/Layout'
 import { H1 } from '../../components/Typography'
 import { addProduct } from '../../store/cartItems/actions'
 import { loadProducts } from '../../store/products/actions'
-import { getProducts } from '../../api/products/get-products'
+import { getProducts } from '../../api/get-products'
 import { ProductsWrap } from './styled'
 import Product from './Product'
 
@@ -26,7 +26,7 @@ class Products extends Component {
       <Layout>
         <H1 textAlign="center">E-Commerce App</H1>
         <ProductsWrap>
-          {this.props.products.map(product => (
+          {this.props.products.map((product) => (
             <Product
               key={product.id}
               node={product}
@@ -39,7 +39,7 @@ class Products extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   products: state.products,
 })
 

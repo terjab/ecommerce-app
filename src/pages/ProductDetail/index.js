@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getProductById } from '../../api/products/get-product'
+import { getProduct } from '../../api/get-product'
 import { H1 } from '../../components/Typography'
 import Layout from '../../components/Layout'
 import Button from '../../components/Button'
@@ -32,31 +32,30 @@ class Detail extends Component {
   }
 
   fetchProduct = async productId => {
-    const product = await getProductById(productId)
+    const product = await getProduct(productId)
     this.setState({ product })
   }
 
   render() {
     const { product } = this.state
     const { dispatch } = this.props
-
     return (
       <Layout>
         <Wrapper>
           {product && (
             <>
               <ImgWrapper>
-                <Img src={product.image_url} />
+                <Img src={product.data.attributes.image_url} />
               </ImgWrapper>
               <DetailsWrapper>
-                <H1 textAlign="center">{product.name}</H1>
-                <Price>{product.price.formatted_amount}</Price>
-                <Description>{product.description}</Description>
+                <H1 textAlign="center">{product.data.attributes.name}</H1>
+                <Price>{product.included[0].attributes.formatted_amount}</Price>
+                <Description>{product.data.attributes.description}</Description>
                 <Button
                   onClick={() =>
                     dispatch({
                       type: 'cartItems/ADD',
-                      payload: product.id,
+                      payload: product.data.id,
                     })
                   }
                 >
