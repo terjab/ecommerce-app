@@ -30,6 +30,7 @@ class Layout extends Component {
             <StyledLink to="/cart">My Cart</StyledLink>
             <StyledLink to="/signup">Sign Up</StyledLink>
             <StyledLink to="/account">My account</StyledLink>
+            <StyledLink to="/login">Log In</StyledLink>
           </HeaderSection>
         </Header>
         <Wrapper>{this.props.children}</Wrapper>

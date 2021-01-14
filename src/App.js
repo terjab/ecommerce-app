@@ -8,6 +8,7 @@ import { Cart } from './pages/Cart'
 import { SignUp } from './pages/SignUp'
 import { Account } from './pages/Account'
 import { PrivateRoute } from './components/PrivateRoute'
+import { Login } from './pages/Login'
 import store from './store'
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route path="/" exact component={ProductList} />
             <Route path="/cart" component={Cart} />
             <Route path="/signup" component={SignUp} />
+            <Route path="/login" component={Login} />
             <PrivateRoute path="/account" component={Account} />
             <Route path="/:productId" component={ProductDetail} />
           </Switch>
