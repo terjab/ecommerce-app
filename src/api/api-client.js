@@ -7,7 +7,6 @@ export const api = async (url, options) => {
 
   if (!token) {
     token = await getGuestToken()
-    console.log('token', token)
   }
 
   const response = await fetch(`${config.apiUrl}${url}`, {

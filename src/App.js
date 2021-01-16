@@ -9,7 +9,12 @@ import { SignUp } from './pages/SignUp'
 import { Account } from './pages/Account'
 import { PrivateRoute } from './components/PrivateRoute'
 import { Login } from './pages/Login'
-import store from './store'
+import { getCustomer } from './utils/customer'
+import { configureStore } from './store'
+
+const store = configureStore({
+  customer: getCustomer(),
+})
 
 class App extends Component {
   render() {

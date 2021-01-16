@@ -36,7 +36,7 @@ class Login extends Component {
         <H1 textAlign="center">Log In</H1>
         <Formik
           initialValues={this.values}
-          validate={schema}
+          validationSchema={schema}
           onSubmit={this.handleSubmit}
         >
           {({ handleSubmit, isSubmitting }) => (

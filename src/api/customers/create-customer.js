@@ -1,6 +1,7 @@
 import { api } from '../api-client'
+import { getCustomerToken } from './get-customer-token'
 
-export const createCustomer = async ({ name, email, password }) => {
+export const createCustomer = async ({ firstName, email, password }) => {
   const requestBody = {
     data: {
       type: 'customers',
@@ -8,7 +9,7 @@ export const createCustomer = async ({ name, email, password }) => {
         email,
         password,
         metadata: {
-          name,
+          firstName,
         },
       },
     },
@@ -19,5 +20,23 @@ export const createCustomer = async ({ name, email, password }) => {
     body: JSON.stringify(requestBody),
   })
 
-  console.log('response', response)
+  if (!response.errors) {
+    const {
+      data: { attributes },
+    } = response
+
+    const { ownerId } = await getCustomerToken({ username: email, password })
+
+    return {
+      ownerId,
+      username: attributes.email,
+      firstName: attributes.metadata.firstName,
+    }
+  } else {
+    if (response.errors[0].status === '422') {
+      throw new Error('E-mail has already been taken')
+    } else {
+      throw new Error('Unexpected error')
+    }
+  }
 }
