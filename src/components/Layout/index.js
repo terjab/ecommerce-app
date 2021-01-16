@@ -1,24 +1,8 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import { Header, HeaderSection, StyledLink, Wrapper } from './styled'
+import { connect } from 'react-redux'
 
-const Wrapper = styled.div`
-  padding: 2rem;
-`
-
-const Header = styled.header`
-  padding: 3rem;
-  border-bottom: 0.1rem solid gainsboro;
-  display: flex;
-  justify-content: space-between;
-`
-const HeaderSection = styled.div``
-
-const StyledLink = styled(Link)`
-  margin-right: 1rem;
-`
-
-class Layout extends Component {
+class LayoutComponent extends Component {
   render() {
     return (
       <>
@@ -29,8 +13,16 @@ class Layout extends Component {
           <HeaderSection>
             <StyledLink to="/cart">My Cart</StyledLink>
             <StyledLink to="/signup">Sign Up</StyledLink>
-            <StyledLink to="/account">My account</StyledLink>
-            <StyledLink to="/login">Log In</StyledLink>
+            {this.props.isAutenthicated ? (
+              <StyledLink to="/account">My account</StyledLink>
+            ) : (
+              ''
+            )}
+            {this.props.isAutenthicated ? (
+              <StyledLink to="">Log out</StyledLink>
+            ) : (
+              <StyledLink to="/login">Log In</StyledLink>
+            )}
           </HeaderSection>
         </Header>
         <Wrapper>{this.props.children}</Wrapper>
@@ -38,5 +30,11 @@ class Layout extends Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  isAutenthicated: Object.keys(state.customer).length !== 0,
+})
+
+const Layout = connect(mapStateToProps)(LayoutComponent)
 
 export default Layout
