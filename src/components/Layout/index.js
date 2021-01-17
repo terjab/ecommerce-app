@@ -1,8 +1,21 @@
 import React, { Component } from 'react'
-import { Header, HeaderSection, StyledLink, Wrapper } from './styled'
+import { withRouter } from 'react-router-dom'
+
 import { connect } from 'react-redux'
+import { removeCustomer } from '../../utils/customer'
+import { removeToken } from '../../utils/token'
+import { logOut } from '../../store/customer/actions'
+
+import { Header, HeaderSection, StyledLink, Wrapper } from './styled'
 
 class LayoutComponent extends Component {
+  handleLogout = () => {
+    removeCustomer()
+    removeToken()
+    this.props.logOut()
+    this.props.history.push('/')
+  }
+
   render() {
     return (
       <>
@@ -19,7 +32,9 @@ class LayoutComponent extends Component {
               ''
             )}
             {this.props.isAutenthicated ? (
-              <StyledLink to="">Log out</StyledLink>
+              <StyledLink onClick={this.handleLogout} to="/">
+                Log out
+              </StyledLink>
             ) : (
               <StyledLink to="/login">Log In</StyledLink>
             )}
@@ -35,6 +50,10 @@ const mapStateToProps = state => ({
   isAutenthicated: Object.keys(state.customer).length !== 0,
 })
 
-const Layout = connect(mapStateToProps)(LayoutComponent)
+const mapDispatchToProps = {
+  logOut,
+}
 
-export default Layout
+const Layout = connect(mapStateToProps, mapDispatchToProps)(LayoutComponent)
+
+export default withRouter(Layout)

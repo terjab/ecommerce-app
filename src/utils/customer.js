@@ -1,5 +1,7 @@
 export const setCustomer = customer => {
-  window.localStorage.setItem('customer', JSON.stringify(customer))
+  if (typeof customer !== 'undefined') {
+    window.localStorage.setItem('customer', JSON.stringify(customer))
+  }
 }
 
 export const getCustomer = () => {
@@ -8,4 +10,8 @@ export const getCustomer = () => {
     return JSON.parse(customer)
   }
   return {}
+}
+
+export const removeCustomer = () => {
+  window.localStorage.removeItem('customer')
 }

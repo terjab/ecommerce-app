@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
 import { Formik } from 'formik'
+import { connect } from 'react-redux'
 
+import { getCustomerToken } from '../../api/customers/get-customer-token'
 import { schema } from './schema'
+import { getCustomer } from '../../api/customers/get-customer'
+import { logIn } from '../../store/customer/actions'
 
 import Layout from '../../components/Layout'
 import { Input } from '../../components/Input'
@@ -9,7 +13,7 @@ import { H1 } from '../../components/Typography'
 import { Form, GlobalFormError } from '../../components/Form'
 import Button from '../../components/Button'
 
-class Login extends Component {
+class LoginComponent extends Component {
   state = {
     globalError: '',
   }
@@ -19,10 +23,16 @@ class Login extends Component {
     password: '',
   }
 
-  handleSubmit = (values, { setSubmitting }) => {
+  handleSubmit = async (values, { setSubmitting }) => {
     try {
       setSubmitting(true)
-      console.log(values)
+      const { ownerId } = await getCustomerToken({
+        username: values.email,
+        password: values.password,
+      })
+      const customer = await getCustomer(ownerId)
+      this.props.logIn(customer)
+      this.props.history.push('/account')
     } catch (error) {
       this.setState({ globalError: error.message })
     }
@@ -56,5 +66,11 @@ class Login extends Component {
     )
   }
 }
+
+const mapDispatchToProps = {
+  logIn,
+}
+
+const Login = connect(null, mapDispatchToProps)(LoginComponent)
 
 export { Login }
