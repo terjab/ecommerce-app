@@ -1,24 +1,21 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
+import { withRouter } from 'react-router-dom'
 
-const Wrapper = styled.div`
-  padding: 2rem;
-`
+import { connect } from 'react-redux'
+import { removeCustomer } from '../../utils/customer'
+import { removeToken } from '../../utils/token'
+import { logOut } from '../../store/customer/actions'
 
-const Header = styled.header`
-  padding: 3rem;
-  border-bottom: 0.1rem solid gainsboro;
-  display: flex;
-  justify-content: space-between;
-`
-const HeaderSection = styled.div``
+import { Header, HeaderSection, StyledLink, Wrapper } from './styled'
 
-const StyledLink = styled(Link)`
-  margin-right: 1rem;
-`
+class LayoutComponent extends Component {
+  handleLogout = () => {
+    removeCustomer()
+    removeToken()
+    this.props.logOut()
+    this.props.history.push('/')
+  }
 
-class Layout extends Component {
   render() {
     return (
       <>
@@ -29,7 +26,18 @@ class Layout extends Component {
           <HeaderSection>
             <StyledLink to="/cart">My Cart</StyledLink>
             <StyledLink to="/signup">Sign Up</StyledLink>
-            <StyledLink to="/account">My account</StyledLink>
+            {this.props.isAutenthicated ? (
+              <StyledLink to="/account">My account</StyledLink>
+            ) : (
+              ''
+            )}
+            {this.props.isAutenthicated ? (
+              <StyledLink onClick={this.handleLogout} to="/">
+                Log out
+              </StyledLink>
+            ) : (
+              <StyledLink to="/login">Log In</StyledLink>
+            )}
           </HeaderSection>
         </Header>
         <Wrapper>{this.props.children}</Wrapper>
@@ -38,4 +46,14 @@ class Layout extends Component {
   }
 }
 
-export default Layout
+const mapStateToProps = state => ({
+  isAutenthicated: Object.keys(state.customer).length !== 0,
+})
+
+const mapDispatchToProps = {
+  logOut,
+}
+
+const Layout = connect(mapStateToProps, mapDispatchToProps)(LayoutComponent)
+
+export default withRouter(Layout)

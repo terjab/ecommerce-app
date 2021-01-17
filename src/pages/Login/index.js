@@ -2,52 +2,50 @@ import React, { Component } from 'react'
 import { Formik } from 'formik'
 import { connect } from 'react-redux'
 
-import { createCustomer } from '../../api/customers/create-customer'
+import { getCustomerToken } from '../../api/customers/get-customer-token'
+import { schema } from './schema'
 import { getCustomer } from '../../api/customers/get-customer'
 import { logIn } from '../../store/customer/actions'
 
 import Layout from '../../components/Layout'
-import { H1 } from '../../components/Typography'
-import { schema } from './schema'
-import { Form, GlobalFormError } from '../../components/Form'
 import { Input } from '../../components/Input'
+import { H1 } from '../../components/Typography'
+import { Form, GlobalFormError } from '../../components/Form'
 import Button from '../../components/Button'
 
-class SignUpPage extends Component {
+class LoginComponent extends Component {
   state = {
     globalError: '',
   }
 
-  initialValues = {
-    firstName: '',
+  values = {
     email: '',
     password: '',
-    passwordConfirm: '',
   }
 
   handleSubmit = async (values, { setSubmitting }) => {
     try {
       setSubmitting(true)
-      const { ownerId } = await createCustomer(values)
+      const { ownerId } = await getCustomerToken({
+        username: values.email,
+        password: values.password,
+      })
       const customer = await getCustomer(ownerId)
       this.props.logIn(customer)
       this.props.history.push('/account')
     } catch (error) {
-      this.setState({
-        globalError: error.message,
-      })
+      this.setState({ globalError: error.message })
     }
     setSubmitting(false)
   }
 
   render() {
     const { globalError } = this.state
-
     return (
       <Layout>
-        <H1 textAlign="center">Sign Up</H1>
+        <H1 textAlign="center">Log In</H1>
         <Formik
-          initialValues={this.initialValues}
+          initialValues={this.values}
           validationSchema={schema}
           onSubmit={this.handleSubmit}
         >
@@ -56,16 +54,10 @@ class SignUpPage extends Component {
               {Boolean(globalError) && (
                 <GlobalFormError>{globalError}</GlobalFormError>
               )}
-              <Input name="firstName" label="First name" />
-              <Input name="email" type="email" label="E-mail" />
-              <Input name="password" type="password" label="Password" />
-              <Input
-                name="passwordConfirm"
-                type="password"
-                label="Password confirm"
-              />
-              <Button disabled={isSubmitting}>
-                {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+              <Input name="email" label="E-mail" type="email" />
+              <Input name="password" label="Password" type="password" />
+              <Button type="submit" disabled={isSubmitting}>
+                Log In
               </Button>
             </Form>
           )}
@@ -79,6 +71,6 @@ const mapDispatchToProps = {
   logIn,
 }
 
-const SignUp = connect(null, mapDispatchToProps)(SignUpPage)
+const Login = connect(null, mapDispatchToProps)(LoginComponent)
 
-export { SignUp }
+export { Login }
