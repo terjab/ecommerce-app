@@ -34,7 +34,10 @@
     "not op_mini all"
   ],
   "dependencies": {
+    "eslint-plugin-react-hooks": "^4.2.0",
     "formik": "^2.2.6",
+    "qs": "^6.9.6",
+    "ramda": "^0.27.1",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-redux": "^6.0.1",

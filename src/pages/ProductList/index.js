@@ -1,53 +1,49 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
-import Layout from '../../components/Layout'
-import { H1 } from '../../components/Typography'
-import { addProduct } from '../../store/cartItems/actions'
-import { loadProducts } from '../../store/products/actions'
+import { addProduct as addProductAction } from '../../store/cart/actions'
 import { getProducts } from '../../api/products/get-products'
 import { ProductsWrap } from './styled'
+import { useApi } from '../../api/use-api'
 import Product from './Product'
+import Layout from '../../components/Layout'
+import { H1 } from '../../components/Typography'
+import { Pagination } from '../../components/Pagination'
 
-class Products extends Component {
-  async componentDidMount() {
-    if (this.props.products.length === 0) {
-      const products = await getProducts()
-      this.props.loadProducts(products)
-    }
-  }
+const Products = ({ match, addProduct }) => {
+  const { page } = match.params
 
-  handleAddToCart = (productId, e) => {
-    e.preventDefault()
-    this.props.addProduct(productId)
-  }
+  const { data: res } = useApi(
+    () => getProducts({ page: { number: page } }),
+    page
+  )
 
-  render() {
-    return (
-      <Layout>
-        <H1 textAlign="center">E-Commerce App</H1>
-        <ProductsWrap>
-          {this.props.products.map(product => (
-            <Product
-              key={product.id}
-              node={product}
-              onAddToCart={this.handleAddToCart}
-            />
-          ))}
-        </ProductsWrap>
-      </Layout>
-    )
-  }
+  const handleAddToCart = productId => addProduct(productId)
+
+  return (
+    <Layout>
+      <H1 textAlign="center">E-Commerce App</H1>
+      {res && (
+        <>
+          <Pagination pages={res.meta.page_count} />
+          <ProductsWrap>
+            {res.data.map(product => (
+              <Product
+                key={product.id}
+                node={product}
+                onAddToCart={handleAddToCart}
+              />
+            ))}
+          </ProductsWrap>
+        </>
+      )}
+    </Layout>
+  )
 }
-
-const mapStateToProps = state => ({
-  products: state.products,
-})
 
 const mapDispatchToProps = {
-  loadProducts,
-  addProduct,
+  addProduct: addProductAction,
 }
 
-const ProductList = connect(mapStateToProps, mapDispatchToProps)(Products)
+const ProductList = connect(null, mapDispatchToProps)(Products)
 
 export { ProductList }

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import React from 'react'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import GlobalStyles from './globalStyles'
 import { ProductList } from './pages/ProductList'
@@ -16,24 +16,23 @@ const store = configureStore({
   customer: getCustomer(),
 })
 
-class App extends Component {
-  render() {
-    return (
-      <Provider store={store}>
-        <>
-          <GlobalStyles />
-          <Switch>
-            <Route path="/" exact component={ProductList} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/signup" component={SignUp} />
-            <Route path="/login" component={Login} />
-            <PrivateRoute path="/account" component={Account} />
-            <Route path="/:productId" component={ProductDetail} />
-          </Switch>
-        </>
-      </Provider>
-    )
-  }
+const App = () => {
+  return (
+    <Provider store={store}>
+      <>
+        <GlobalStyles />
+        <Switch>
+          <Route path="/" exact render={() => <Redirect to="list/1" />} />
+          <Route path="/list/:page" exact component={ProductList} />
+          <Route path="/detail/:productId" component={ProductDetail} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/login" component={Login} />
+          <PrivateRoute path="/account" component={Account} />
+        </Switch>
+      </>
+    </Provider>
+  )
 }
 
-export default App
+export { App }

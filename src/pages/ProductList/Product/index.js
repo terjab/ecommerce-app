@@ -4,7 +4,7 @@ import { Wrapper, ImgWrap, Img, TitleWrap, Title, Price, Link } from './styled'
 
 const Product = ({ node, onAddToCart }) => (
   <Wrapper>
-    <Link to={node.id}>
+    <Link to={`/detail/${node.id}`}>
       <ImgWrap>
         <Img src={node.image_url} alt={`${node.name} image`} />
       </ImgWrap>
@@ -12,7 +12,14 @@ const Product = ({ node, onAddToCart }) => (
         <Title>{node.name}</Title>
       </TitleWrap>
       <Price>{node.price.formatted_amount}</Price>
-      <Button onClick={e => onAddToCart(node.id, e)}>Add to cart</Button>
+      <Button
+        onClick={e => {
+          e.preventDefault()
+          onAddToCart(node.id)
+        }}
+      >
+        Add to cart
+      </Button>
     </Link>
   </Wrapper>
 )
