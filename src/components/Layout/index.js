@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-
 import { connect } from 'react-redux'
+
+import * as routes from '../../routes'
 import { removeCustomer } from '../../utils/customer'
 import { removeToken } from '../../utils/token'
 import { logOut } from '../../store/customer/actions'
@@ -13,7 +14,7 @@ class LayoutComponent extends Component {
     removeCustomer()
     removeToken()
     this.props.logOut()
-    this.props.history.push('/')
+    this.props.history.push(routes.HOMEPAGE)
   }
 
   render() {
@@ -21,22 +22,22 @@ class LayoutComponent extends Component {
       <>
         <Header>
           <HeaderSection>
-            <StyledLink to="/">All products</StyledLink>
+            <StyledLink to={routes.HOMEPAGE}>All products</StyledLink>
           </HeaderSection>
           <HeaderSection>
-            <StyledLink to="/cart">My Cart</StyledLink>
-            <StyledLink to="/signup">Sign Up</StyledLink>
+            <StyledLink to={routes.CART}>My Cart</StyledLink>
+            <StyledLink to={routes.SIGNUP}>Sign Up</StyledLink>
             {this.props.isAutenthicated ? (
-              <StyledLink to="/account">My account</StyledLink>
+              <StyledLink to={routes.ACCOUNT}>My account</StyledLink>
             ) : (
               ''
             )}
             {this.props.isAutenthicated ? (
-              <StyledLink onClick={this.handleLogout} to="/">
+              <StyledLink onClick={this.handleLogout} to={routes.HOMEPAGE}>
                 Log out
               </StyledLink>
             ) : (
-              <StyledLink to="/login">Log In</StyledLink>
+              <StyledLink to={routes.LOGIN}>Log In</StyledLink>
             )}
           </HeaderSection>
         </Header>

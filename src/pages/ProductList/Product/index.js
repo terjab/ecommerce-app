@@ -1,10 +1,11 @@
 import React from 'react'
+import { getProductDetailRoute } from '../../../routes'
 import Button from '../../../components/Button'
 import { Wrapper, ImgWrap, Img, TitleWrap, Title, Price, Link } from './styled'
 
 const Product = ({ node, onAddToCart }) => (
   <Wrapper>
-    <Link to={`/detail/${node.id}`}>
+    <Link to={getProductDetailRoute(node.id)}>
       <ImgWrap>
         <Img src={node.image_url} alt={`${node.name} image`} />
       </ImgWrap>

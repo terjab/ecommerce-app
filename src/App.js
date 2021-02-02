@@ -1,6 +1,7 @@
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
+import * as routes from './routes'
 import GlobalStyles from './globalStyles'
 import { ProductList } from './pages/ProductList'
 import { ProductDetail } from './pages/ProductDetail'
@@ -22,13 +23,17 @@ const App = () => {
       <>
         <GlobalStyles />
         <Switch>
-          <Route path="/" exact render={() => <Redirect to="list/1" />} />
-          <Route path="/list/:page" exact component={ProductList} />
-          <Route path="/detail/:productId" component={ProductDetail} />
-          <Route path="/cart" component={Cart} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/login" component={Login} />
-          <PrivateRoute path="/account" component={Account} />
+          <Route
+            path={routes.HOMEPAGE}
+            exact
+            render={() => <Redirect to={routes.PRODUCT_LIST} />}
+          />
+          <Route path={routes.PRODUCT_LIST} exact component={ProductList} />
+          <Route path={routes.PRODUCT_DETAIL} component={ProductDetail} />
+          <Route path={routes.CART} component={Cart} />
+          <Route path={routes.SIGNUP} component={SignUp} />
+          <Route path={routes.LOGIN} component={Login} />
+          <PrivateRoute path={routes.ACCOUNT} component={Account} />
         </Switch>
       </>
     </Provider>

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { getProductById } from '../../api/products/get-product'
 import { useApi } from '../../api/use-api'
 import { addProduct as addProductAction } from '../../store/cart/actions'
+import { HOMEPAGE } from '../../routes'
 
 import { H1 } from '../../components/Typography'
 import Layout from '../../components/Layout'
@@ -37,7 +38,7 @@ const Detail = ({ match, addProduct }) => {
               <Button onClick={() => addProduct(product.id)}>
                 Add to Cart
               </Button>
-              <Link to="/">Back</Link>
+              <Link to={HOMEPAGE}>Back</Link>
             </DetailsWrapper>
           </>
         )}

@@ -1,16 +1,21 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addProduct as addProductAction } from '../../store/cart/actions'
-import { getProducts } from '../../api/products/get-products'
-import { ProductsWrap } from './styled'
-import { useApi } from '../../api/use-api'
+import qs from 'qs'
+
 import Product from './Product'
-import Layout from '../../components/Layout'
-import { H1 } from '../../components/Typography'
 import { Pagination } from '../../components/Pagination'
 
-const Products = ({ match, addProduct }) => {
-  const { page } = match.params
+import { addProduct as addProductAction } from '../../store/cart/actions'
+import { getProducts } from '../../api/products/get-products'
+import { useApi } from '../../api/use-api'
+
+import { ProductsWrap } from './styled'
+import Layout from '../../components/Layout'
+import { H1 } from '../../components/Typography'
+
+// eslint-disable-next-line no-shadow
+const Products = ({ location, addProduct }) => {
+  const { page } = qs.parse(location.search.substr(1))
 
   const { data: res } = useApi(() => getProducts({ page: { number: page } }), [
     page,

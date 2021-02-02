@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { createCustomer } from '../../api/customers/create-customer'
 import { getCustomer } from '../../api/customers/get-customer'
 import { logIn } from '../../store/customer/actions'
+import { ACCOUNT } from '../../routes'
 
 import Layout from '../../components/Layout'
 import { H1 } from '../../components/Typography'
@@ -31,7 +32,7 @@ class SignUpPage extends Component {
       const { ownerId } = await createCustomer(values)
       const customer = await getCustomer(ownerId)
       this.props.logIn(customer)
-      this.props.history.push('/account')
+      this.props.history.push(ACCOUNT)
     } catch (error) {
       this.setState({
         globalError: error.message,
