@@ -3,10 +3,15 @@ import Layout from '../../components/Layout'
 import { connect } from 'react-redux'
 
 export const AccountPage = ({ customer }) => {
-  console.log('login page')
+  console.log(customer)
   return (
     <Layout>
-      <h1>Hello, {customer.attributes.metadata.firstName}</h1>
+      <h1>
+        Hi,{' '}
+        {customer.attributes.metadata.firstName
+          ? customer.attributes.metadata.firstName
+          : 'there'}
+      </h1>
     </Layout>
   )
 }
