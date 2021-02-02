@@ -12,10 +12,9 @@ import { Pagination } from '../../components/Pagination'
 const Products = ({ match, addProduct }) => {
   const { page } = match.params
 
-  const { data: res } = useApi(
-    () => getProducts({ page: { number: page } }),
-    page
-  )
+  const { data: res } = useApi(() => getProducts({ page: { number: page } }), [
+    page,
+  ])
 
   const handleAddToCart = productId => addProduct(productId)
 
