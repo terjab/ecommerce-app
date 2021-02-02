@@ -3,7 +3,6 @@ import Layout from '../../components/Layout'
 import { connect } from 'react-redux'
 
 export const AccountPage = ({ customer }) => {
-  console.log(customer)
   return (
     <Layout>
       <h1>
