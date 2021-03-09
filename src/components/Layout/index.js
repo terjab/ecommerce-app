@@ -7,7 +7,13 @@ import { removeCustomer } from '../../utils/customer'
 import { removeToken } from '../../utils/token'
 import { logOut } from '../../store/customer/actions'
 
-import { Header, HeaderSection, StyledLink, Wrapper } from './styled'
+import {
+  Header,
+  HeaderSection,
+  StyledLink,
+  Wrapper,
+  StyledNavLink,
+} from './styled'
 
 class LayoutComponent extends Component {
   handleLogout = () => {
@@ -25,19 +31,19 @@ class LayoutComponent extends Component {
             <StyledLink to={routes.HOMEPAGE}>All products</StyledLink>
           </HeaderSection>
           <HeaderSection>
-            <StyledLink to={routes.CART}>My Cart</StyledLink>
-            <StyledLink to={routes.SIGNUP}>Sign Up</StyledLink>
+            <StyledNavLink to={routes.CART}>My Cart</StyledNavLink>
+            <StyledNavLink to={routes.SIGNUP}>Sign Up</StyledNavLink>
             {this.props.isAutenthicated ? (
-              <StyledLink to={routes.ACCOUNT}>My account</StyledLink>
+              <StyledNavLink to={routes.ACCOUNT}>My account</StyledNavLink>
             ) : (
               ''
             )}
             {this.props.isAutenthicated ? (
-              <StyledLink onClick={this.handleLogout} to={routes.HOMEPAGE}>
+              <StyledNavLink onClick={this.handleLogout} to={routes.HOMEPAGE}>
                 Log out
-              </StyledLink>
+              </StyledNavLink>
             ) : (
-              <StyledLink to={routes.LOGIN}>Log In</StyledLink>
+              <StyledNavLink to={routes.LOGIN}>Log In</StyledNavLink>
             )}
           </HeaderSection>
         </Header>

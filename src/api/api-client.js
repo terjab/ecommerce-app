@@ -8,7 +8,7 @@ export const api = async (url, options) => {
   if (!token) {
     token = await getGuestToken()
   }
-
+  console.log(url)
   const response = await fetch(`${config.apiUrl}${url}`, {
     method: 'GET',
     headers: {

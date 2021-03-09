@@ -1,13 +1,12 @@
 import * as React from 'react'
-import { Link } from 'react-router-dom'
 import range from 'ramda/src/range'
 import map from 'ramda/src/map'
 import { PRODUCT_LIST } from '../../routes'
-import { List, ListItem } from './styled'
+import { List, ListItem, StyledLink } from './styled'
 
 const renderPaginationItem = num => (
   <ListItem key={num}>
-    <Link to={`${PRODUCT_LIST}/?page=${num}`}>{num}</Link>
+    <StyledLink to={`${PRODUCT_LIST}/?page=${num}`}>{num}</StyledLink>
   </ListItem>
 )
 
